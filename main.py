@@ -7,8 +7,10 @@ def main():
     characters_dict = count_characters(lowered_text)
     print ("--- Begin report of books/frankenstein.txt ---")
     print(f"{num_words} words found in the document")
-    for key in characters_dict:
-        print(f"The '{key}' character was found {characters_dict[key]} times")
+    # Sort dictionary items by count in descending order
+    sorted_chars = sorted(characters_dict.items(), key=lambda x: x[1], reverse=True)
+    for char, count in sorted_chars:
+        print(f"The '{char}' character was found {count} times")
     print ("--- End report ---")
 
 

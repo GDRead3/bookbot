@@ -1,4 +1,5 @@
 def main():
+    print ("Hello, I'm a book bot! I can read a text file and tell you how many words and characters are in it.")
     book_path = "books/frankenstein.txt"
     text = get_book_text(book_path)
     num_words = get_num_words(text)
@@ -9,6 +10,7 @@ def main():
     for key in characters_dict:
         print(f"The '{key}' character was found {characters_dict[key]} times")
     print ("--- End report ---")
+
 
 def get_num_words(text):
     words = text.split()

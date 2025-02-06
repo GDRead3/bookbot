@@ -7,10 +7,20 @@ def main():
     characters_dict = count_characters(lowered_text)
     print ("--- Begin report of books/frankenstein.txt ---")
     print(f"{num_words} words found in the document")
-    # Sort dictionary items by count in descending order
-    sorted_chars = sorted(characters_dict.items(), key=lambda x: x[1], reverse=True)
-    for char, count in sorted_chars:
-        print(f"The '{char}' character was found {count} times")
+    print ("would you like to sort the characters in order of frequency or in alphabetical order? (f = frequency, a = alphabetical)")
+    choice = input()
+    if choice == "f" or choice == "F":
+        # Sort dictionary items by count in descending order
+        sorted_chars = sorted(characters_dict.items(), key=lambda x: x[1], reverse=True)
+        for char, count in sorted_chars:
+            print(f"The '{char}' character was found {count} times")
+    elif choice == "a" or choice == "A":
+        # Sort dictionary items in alphabetical order
+        sorted_chars = sorted(characters_dict.items(), key=lambda x: x[0].lower())
+        for char, count in sorted_chars:
+            print(f"The '{char}' character was found {count} times")
+    else:
+        print ("invalid option selected... ending report")
     print ("--- End report ---")
 
 

@@ -8,13 +8,14 @@ def main():
     print("\nWhat would you like to do?")
     print("1. View character count analysis")
     print("2. Search for a specific word")
-    print("3. Both")
-    choice = input("Enter your choice (1-3): ")
+    print("3. View most common words")
+    print("4. All of the above")
+    choice = input("Enter your choice (1-4): ")
     
     print("\n--- Begin report of books/frankenstein.txt ---")
     print(f"{num_words} words found in the document\n")
     
-    if choice in ['1', '3']:
+    if choice in ['1', '4']:
         characters_dict = count_characters(lowered_text)
         print("Would you like to sort the characters in order of frequency or in alphabetical order? (f = frequency, a = alphabetical)")
         sort_choice = input()
@@ -33,10 +34,19 @@ def main():
             print("Invalid option selected... skipping character analysis")
         print()
         
-    if choice in ['2', '3']:
+    if choice in ['2', '4']:
         search_word = input("Enter a word to search for: ").lower()
         word_count = count_word(lowered_text, search_word)
         print(f"The word '{search_word}' appears {word_count} times\n")
+    
+    if choice in ['3', '4']:
+        print("Most common words analysis:")
+        word_counts = count_most_common_words(lowered_text)
+        num_words_to_show = int(input("How many top words would you like to see? "))
+        print(f"\nTop {num_words_to_show} most common words:")
+        for word, count in word_counts[:num_words_to_show]:
+            print(f"'{word}' appears {count} times")
+        print()
     
     print("--- End report ---")
 
@@ -66,5 +76,22 @@ def count_characters(text):
 def count_word(text, word):
     words = text.split()
     return words.count(word)
+
+def count_most_common_words(text):
+    # List of common English words to exclude
+    stop_words = {'the', 'and', 'to', 'of', 'i', 'a', 'in', 'was', 'that', 'had', 'is', 'it', 'for', 'you', 'he', 'be', 'with', 'on', 'at', 'by', 'not', 'this', 'but', 'they', 'his', 'from', 'she', 'her', 'were', 'my', 'as', 'what', 'their', 'has', 'would', 'there', 'been', 'have', 'which', 'when', 'who', 'will', 'more', 'if', 'no', 'out', 'so', 'up', 'all'}
+    
+    # Split text into words and remove punctuation
+    words = text.replace(',', '').replace('.', '').replace('!', '').replace('?', '').replace('"', '').replace(';', '').replace(':', '').split()
+    
+    # Count words excluding stop words
+    word_counts = {}
+    for word in words:
+        if word.isalpha() and word not in stop_words:
+            word_counts[word] = word_counts.get(word, 0) + 1
+    
+    # Sort by frequency in descending order
+    sorted_words = sorted(word_counts.items(), key=lambda x: x[1], reverse=True)
+    return sorted_words
 
 main()

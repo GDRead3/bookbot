@@ -41,6 +41,7 @@ def main():
     
     if choice in ['3', '4']:
         print("Most common words analysis:")
+        print("would you like to exclude common words like 'the', 'and', 'to' (Y/N)")
         word_counts = count_most_common_words(lowered_text)
         num_words_to_show = int(input("How many top words would you like to see? "))
         print(f"\nTop {num_words_to_show} most common words:")

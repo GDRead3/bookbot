@@ -41,8 +41,7 @@ def main():
     
     if choice in ['3', '4']:
         print("Most common words analysis:")
-        include_stop_words = input("Would you like to include common words like 'the', 'and', 'to'? (y/n): ").lower() == 'y'
-        word_counts = count_most_common_words(lowered_text, include_stop_words)
+        word_counts = count_most_common_words(lowered_text)
         num_words_to_show = int(input("How many top words would you like to see? "))
         print(f"\nTop {num_words_to_show} most common words:")
         for word, count in word_counts[:num_words_to_show]:
@@ -78,19 +77,18 @@ def count_word(text, word):
     words = text.split()
     return words.count(word)
 
-def count_most_common_words(text, include_stop_words=False):
-    # List of common English words to potentially exclude
+def count_most_common_words(text):
+    # List of common English words to exclude
     stop_words = {'the', 'and', 'to', 'of', 'i', 'a', 'in', 'was', 'that', 'had', 'is', 'it', 'for', 'you', 'he', 'be', 'with', 'on', 'at', 'by', 'not', 'this', 'but', 'they', 'his', 'from', 'she', 'her', 'were', 'my', 'as', 'what', 'their', 'has', 'would', 'there', 'been', 'have', 'which', 'when', 'who', 'will', 'more', 'if', 'no', 'out', 'so', 'up', 'all'}
     
     # Split text into words and remove punctuation
     words = text.replace(',', '').replace('.', '').replace('!', '').replace('?', '').replace('"', '').replace(';', '').replace(':', '').split()
     
-    # Count words
+    # Count words excluding stop words
     word_counts = {}
     for word in words:
-        if word.isalpha():
-            if include_stop_words or word not in stop_words:
-                word_counts[word] = word_counts.get(word, 0) + 1
+        if word.isalpha() and word not in stop_words:
+            word_counts[word] = word_counts.get(word, 0) + 1
     
     # Sort by frequency in descending order
     sorted_words = sorted(word_counts.items(), key=lambda x: x[1], reverse=True)
